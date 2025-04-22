@@ -1,10 +1,13 @@
 # Thai plate prophecy GO
 
 This project is designed to help customers predict or "prophecy" potential license plate numbers. By leveraging algorithms and user input, it provides insights and suggestions for plate numbers that may hold significance or align with user preferences.  
-
+-
+Library สำหรับใช้ตรวจสอบทะเบียนที่เหมาะสมกับตัวเรา และยังสามารถช่วยแนะนำทะเบียนที่เหมาะสมกับตัวเราผ่านวันเดือนปีเกิดได้อีกด้วย ที่จะช่วยส่งเสริมในด้านต่างๆตามความเชื่อ 
 ---
-## Example
+## How to install
+`$ go get github.com/naruebaet/thai-plate-prophecy-go`
 
+## Example
 ```Go
 package main
 
@@ -19,7 +22,12 @@ func main() {
 	raw, _ := tpp.CalculatePlateData("1กข", "1234")
 	prettyJson, _ := json.MarshalIndent(raw, "", "  ")
 	fmt.Printf("%s\n", prettyJson)
+
+	advice, _ := tpp.AdvicePlateData("22", "02", "1993")
+	prettyJsonAdvice, _ := json.MarshalIndent(advice, "", "  ")
+	fmt.Printf("%s\n", prettyJsonAdvice)
 }
+
 
 ```
 

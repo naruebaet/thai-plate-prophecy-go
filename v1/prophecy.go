@@ -2,8 +2,10 @@ package v1
 
 import (
 	"errors"
+	"fmt"
 	"regexp"
 	"strconv"
+	"time"
 )
 
 // VALIDATION HELPERS
@@ -40,7 +42,7 @@ func getThaiCharValue(char rune) (int, error) {
 		return num, nil
 	}
 
-	return 0, errors.New("Invalid Thai character: " + string(char))
+	return 0, errors.New("invalid Thai character: " + string(char))
 }
 
 // GetLuckyPoint retrieves the lucky point description for a given number
@@ -56,7 +58,7 @@ func getLuckyPoint(point int) (LuckyPoint, error) {
 		}
 	}
 
-	return LuckyPoint{}, errors.New("Invalid point: " + strconv.Itoa(point))
+	return LuckyPoint{}, errors.New("invalid point: " + strconv.Itoa(point))
 }
 
 // GetLuckyPointGroup determines which lucky group a sum belongs to
@@ -76,17 +78,17 @@ func getLuckyPointGroup(sum int) *LuckyPointGroup {
 func validateFirstData(firstData string) error {
 
 	if GetStringCount(firstData) > 3 {
-		return errors.New("Invalid first part of license plate: too long")
+		return errors.New("invalid first part of license plate: too long")
 	}
 
 	runes := []rune(firstData)
 	if !isValidFirstChar(runes[0]) {
-		return errors.New("Invalid first character in license plate")
+		return errors.New("invalid first character in license plate")
 	}
 
 	for i := 1; i < len(runes); i++ {
 		if !isValidThaiChar(runes[i]) {
-			return errors.New("Invalid Thai character in license plate")
+			return errors.New("invalid Thai character in license plate")
 		}
 	}
 
@@ -97,7 +99,7 @@ func validateFirstData(firstData string) error {
 func validateSecondData(secondData string) error {
 	matched, _ := regexp.MatchString(`^\d{1,4}$`, secondData)
 	if !matched {
-		return errors.New("Invalid second part of license plate")
+		return errors.New("invalid second part of license plate")
 	}
 	return nil
 }
@@ -165,4 +167,35 @@ func CalculatePlateData(firstData, secondData string) (PlateCalculationResult, e
 	result.Total.LuckyGroup = totalLuckyGroup
 
 	return result, nil
+}
+
+func AdvicePlateData(date string, month string, year string) (LuckyNumberAdvice, error) {
+
+	inputFormat := fmt.Sprintf("%s-%s-%s", year, month, date)
+
+	// format date from input
+	t, err := time.Parse("2006-01-02", inputFormat)
+	if err != nil {
+		return LuckyNumberAdvice{}, errors.New("invalid date format")
+	}
+
+	// get day from date
+	dayInt := int(t.Weekday())
+
+	// Find luckyNumberAdvice by Day
+	data, err := getLuckyNumberAdvice(dayInt)
+	if err != nil {
+		return LuckyNumberAdvice{}, errors.New("no advice found for the given day")
+	}
+
+	return data, nil
+}
+
+func getLuckyNumberAdvice(day int) (LuckyNumberAdvice, error) {
+	for _, advice := range luckyNumberAdvice {
+		if advice.Day == day {
+			return advice, nil
+		}
+	}
+	return LuckyNumberAdvice{}, errors.New("no advice found for the given day")
 }

@@ -129,3 +129,70 @@ func TestCalculatePlateData(t *testing.T) {
 		})
 	}
 }
+func TestAdvicePlateData(t *testing.T) {
+	// Mock the luckyNumberAdvice for testing
+	originalLuckyNumberAdvice := luckyNumberAdvice
+	defer func() { luckyNumberAdvice = originalLuckyNumberAdvice }()
+	luckyNumberAdvice = []LuckyNumberAdvice{
+		{Day: 0, LuckyNumDesc: "เลขมงคลสำหรับคนเกิดวันอาทิตย์"},
+		{Day: 5, LuckyNumDesc: "xxx"},
+		{Day: 2, LuckyNumDesc: "เลขมงคลสำหรับคนเกิดวันอังคาร"},
+	}
+
+	tests := []struct {
+		name        string
+		date        string
+		month       string
+		year        string
+		want        LuckyNumberAdvice
+		expectError bool
+	}{
+		{
+			name:        "Valid date with advice",
+			date:        "01",
+			month:       "01",
+			year:        "2023",
+			want:        LuckyNumberAdvice{Day: 0, LuckyNumDesc: "เลขมงคลสำหรับคนเกิดวันอาทิตย์"},
+			expectError: false,
+		},
+		{
+			name:        "Valid date with no advice",
+			date:        "02",
+			month:       "01",
+			year:        "2023",
+			want:        LuckyNumberAdvice{},
+			expectError: true,
+		},
+		{
+			name:        "Invalid date format",
+			date:        "32",
+			month:       "01",
+			year:        "2023",
+			want:        LuckyNumberAdvice{},
+			expectError: true,
+		},
+		{
+			name:        "Valid date at the end of the month",
+			date:        "31",
+			month:       "01",
+			year:        "2023",
+			want:        LuckyNumberAdvice{Day: 2, LuckyNumDesc: "เลขมงคลสำหรับคนเกิดวันอังคาร"},
+			expectError: false,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := AdvicePlateData(tt.date, tt.month, tt.year)
+
+			if (err != nil) != tt.expectError {
+				t.Errorf("AdvicePlateData() error = %v, expectError %v", err, tt.expectError)
+				return
+			}
+
+			if !tt.expectError && !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("AdvicePlateData() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
