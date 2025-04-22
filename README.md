@@ -1,8 +1,9 @@
 # Thai plate prophecy GO
 
 This project is designed to help customers predict or "prophecy" potential license plate numbers. By leveraging algorithms and user input, it provides insights and suggestions for plate numbers that may hold significance or align with user preferences.  
--
+
 Library สำหรับใช้ตรวจสอบทะเบียนที่เหมาะสมกับตัวเรา และยังสามารถช่วยแนะนำทะเบียนที่เหมาะสมกับตัวเราผ่านวันเดือนปีเกิดได้อีกด้วย ที่จะช่วยส่งเสริมในด้านต่างๆตามความเชื่อ 
+
 ---
 ## How to install
 `$ go get github.com/naruebaet/thai-plate-prophecy-go`
