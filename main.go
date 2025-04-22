@@ -8,11 +8,39 @@ import (
 )
 
 func main() {
-	raw, _ := tpp.CalculatePlateData("1กข", "1234")
-	prettyJson, _ := json.MarshalIndent(raw, "", "  ")
-	fmt.Printf("%s\n", prettyJson)
+	// Example 1: Using AdviceByPlateData
+	firstData := "กข"
+	secondData := "1234"
+	plateResult, err := tpp.AdviceByPlateData(firstData, secondData)
+	if err != nil {
+		fmt.Println("Error in AdviceByPlateData:", err)
+	} else {
+		plateResultJSON, _ := json.MarshalIndent(plateResult, "", "  ")
+		fmt.Println("AdviceByPlateData Result:")
+		fmt.Println(string(plateResultJSON))
+	}
 
-	advice, _ := tpp.AdvicePlateData("22", "02", "1993")
-	prettyJsonAdvice, _ := json.MarshalIndent(advice, "", "  ")
-	fmt.Printf("%s\n", prettyJsonAdvice)
+	// Example 2: Using AdviceByDMY
+	date := "01"
+	month := "01"
+	year := "2023"
+	dmyResult, err := tpp.AdviceByDMY(date, month, year)
+	if err != nil {
+		fmt.Println("Error in AdviceByDMY:", err)
+	} else {
+		dmyResultJSON, _ := json.MarshalIndent(dmyResult, "", "  ")
+		fmt.Println("AdviceByDMY Result:")
+		fmt.Println(string(dmyResultJSON))
+	}
+
+	// Example 3: Using AdviceByWeekDay
+	day := tpp.WeekDay(1) // 1 for Monday
+	weekdayResult, err := tpp.AdviceByWeekDay(day)
+	if err != nil {
+		fmt.Println("Error in AdviceByWeekDay:", err)
+	} else {
+		weekdayResultJSON, _ := json.MarshalIndent(weekdayResult, "", "  ")
+		fmt.Println("AdviceByWeekDay Result:")
+		fmt.Println(string(weekdayResultJSON))
+	}
 }

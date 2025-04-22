@@ -27,7 +27,7 @@ func isValidNumber(char rune) bool {
 // UTILITY FUNCTIONS
 // GetStringCount returns the number of characters in a string
 // This properly handles UTF-8 characters including Thai script
-func GetStringCount(s string) int {
+func getStringCount(s string) int {
 	return len([]rune(s))
 }
 
@@ -77,7 +77,7 @@ func getLuckyPointGroup(sum int) *LuckyPointGroup {
 // ValidateFirstData validates the first part of a Thai license plate
 func validateFirstData(firstData string) error {
 
-	if GetStringCount(firstData) > 3 {
+	if getStringCount(firstData) > 3 {
 		return errors.New("invalid first part of license plate: too long")
 	}
 
@@ -105,8 +105,10 @@ func validateSecondData(secondData string) error {
 }
 
 // MAIN CALCULATION FUNCTION
-// CalculatePlateData calculates the numerological value and meaning of a Thai license plate
-func CalculatePlateData(firstData, secondData string) (PlateCalculationResult, error) {
+// AdviceByPlateData calculates the numerological value and meaning of a Thai license plate.
+// It takes two string inputs: `firstData` (the first part of the license plate) and `secondData` (the numeric part).
+// Returns a PlateCalculationResult containing the calculated values and meanings, or an error if validation fails.
+func AdviceByPlateData(firstData, secondData string) (PlateCalculationResult, error) {
 	var result PlateCalculationResult
 
 	// Validate inputs
@@ -169,7 +171,10 @@ func CalculatePlateData(firstData, secondData string) (PlateCalculationResult, e
 	return result, nil
 }
 
-func AdvicePlateData(date string, month string, year string) (LuckyNumberAdvice, error) {
+// AdviceByDMY provides lucky number advice based on a given date, month, and year.
+// It takes three string inputs: `date`, `month`, and `year`.
+// Returns a LuckyNumberAdvice containing the advice or an error if the date format is invalid or no advice is found.
+func AdviceByDMY(date, month, year string) (LuckyNumberAdvice, error) {
 
 	inputFormat := fmt.Sprintf("%s-%s-%s", year, month, date)
 
@@ -180,10 +185,10 @@ func AdvicePlateData(date string, month string, year string) (LuckyNumberAdvice,
 	}
 
 	// get day from date
-	dayInt := int(t.Weekday())
+	dayInt := WeekDay(int(t.Weekday()))
 
 	// Find luckyNumberAdvice by Day
-	data, err := getLuckyNumberAdvice(dayInt)
+	data, err := AdviceByWeekDay(dayInt)
 	if err != nil {
 		return LuckyNumberAdvice{}, errors.New("no advice found for the given day")
 	}
@@ -191,9 +196,12 @@ func AdvicePlateData(date string, month string, year string) (LuckyNumberAdvice,
 	return data, nil
 }
 
-func getLuckyNumberAdvice(day int) (LuckyNumberAdvice, error) {
+// AdviceByWeekDay provides lucky number advice based on the day of the week.
+// It takes an integer input `day` representing the day of the week (0 for Sunday, 1 for Monday, etc.).
+// Returns a LuckyNumberAdvice containing the advice or an error if no advice is found for the given day.
+func AdviceByWeekDay(day WeekDay) (LuckyNumberAdvice, error) {
 	for _, advice := range luckyNumberAdvice {
-		if advice.Day == day {
+		if advice.Day == day.Int() {
 			return advice, nil
 		}
 	}

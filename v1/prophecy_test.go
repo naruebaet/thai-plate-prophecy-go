@@ -109,7 +109,7 @@ func TestCalculatePlateData(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := CalculatePlateData(tt.firstData, tt.secondData)
+			got, err := AdviceByPlateData(tt.firstData, tt.secondData)
 
 			// Check error expectations
 			if (err != nil) != tt.expectError {
@@ -129,7 +129,7 @@ func TestCalculatePlateData(t *testing.T) {
 		})
 	}
 }
-func TestAdvicePlateData(t *testing.T) {
+func TestAdviceByPlateData(t *testing.T) {
 	// Mock the luckyNumberAdvice for testing
 	originalLuckyNumberAdvice := luckyNumberAdvice
 	defer func() { luckyNumberAdvice = originalLuckyNumberAdvice }()
@@ -183,15 +183,15 @@ func TestAdvicePlateData(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := AdvicePlateData(tt.date, tt.month, tt.year)
+			got, err := AdviceByDMY(tt.date, tt.month, tt.year)
 
 			if (err != nil) != tt.expectError {
-				t.Errorf("AdvicePlateData() error = %v, expectError %v", err, tt.expectError)
+				t.Errorf("AdviceByDMY() error = %v, expectError %v", err, tt.expectError)
 				return
 			}
 
 			if !tt.expectError && !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("AdvicePlateData() = %v, want %v", got, tt.want)
+				t.Errorf("AdviceByDMY() = %v, want %v", got, tt.want)
 			}
 		})
 	}
