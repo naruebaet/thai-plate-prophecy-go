@@ -13,17 +13,23 @@ type LuckyPointGroup struct {
 }
 
 type PlateCalculationResult struct {
-	FirstPart struct {
-		Value string `json:"value"`
-		Sum   int    `json:"sum"`
-	} `json:"firstPart"`
-	SecondPart struct {
-		Value      string     `json:"value"`
-		Sum        int        `json:"sum"`
-		LuckyPoint LuckyPoint `json:"luckyPoint"`
-	} `json:"secondPart"`
-	Total struct {
-		Sum        int              `json:"sum"`
-		LuckyGroup *LuckyPointGroup `json:"luckyGroup"`
-	} `json:"total"`
+	FirstPart  FirstPartData  `json:"firstPart"`
+	SecondPart SecondPartData `json:"secondPart"`
+	Total      TotalData      `json:"total"`
+}
+
+type FirstPartData struct {
+	Value string `json:"value"`
+	Sum   int    `json:"sum"`
+}
+
+type SecondPartData struct {
+	Value      string     `json:"value"`
+	Sum        int        `json:"sum"`
+	LuckyPoint LuckyPoint `json:"luckyPoint"`
+}
+
+type TotalData struct {
+	Sum        int              `json:"sum"`
+	LuckyGroup *LuckyPointGroup `json:"luckyGroup"`
 }

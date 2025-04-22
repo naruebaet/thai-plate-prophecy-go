@@ -23,6 +23,12 @@ func isValidNumber(char rune) bool {
 }
 
 // UTILITY FUNCTIONS
+// GetStringCount returns the number of characters in a string
+// This properly handles UTF-8 characters including Thai script
+func GetStringCount(s string) int {
+	return len([]rune(s))
+}
+
 // GetThaiCharValue converts a Thai character to its numerical value
 func getThaiCharValue(char rune) (int, error) {
 	if value, exists := thaiCharToNumberMap[char]; exists {
@@ -68,7 +74,8 @@ func getLuckyPointGroup(sum int) *LuckyPointGroup {
 // VALIDATION FUNCTIONS
 // ValidateFirstData validates the first part of a Thai license plate
 func validateFirstData(firstData string) error {
-	if len(firstData) > 3 {
+
+	if GetStringCount(firstData) > 3 {
 		return errors.New("Invalid first part of license plate: too long")
 	}
 

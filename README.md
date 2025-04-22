@@ -9,19 +9,16 @@ Example
 package main
 
 import (
-    "encoding/json"
-    "fmt"
-    "github.com/naruebaet/thai-plate-prophecy-go/v1"
+	"encoding/json"
+	"fmt"
+
+	tpp "github.com/naruebaet/thai-plate-prophecy-go/v1"
 )
 
 func main() {
-    result, err := CalculatePlateData("1กข", "1234")
-    if err != nil {
-        fmt.Println("Error:", err)
-        return
-    }
-    
-    jsonResult, _ := json.MarshalIndent(result, "", "  ")
-    fmt.Println(string(jsonResult))
+	raw, _ := tpp.CalculatePlateData("1กข", "1234")
+	prettyJson, _ := json.MarshalIndent(raw, "", "  ")
+	fmt.Printf("%s\n", prettyJson)
 }
+
 ```
