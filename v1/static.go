@@ -1,7 +1,6 @@
 package v1
 
 // DATA MAPPINGS
-// Character to number mapping for Thai license plates
 var thaiCharToNumberMap = map[rune]int{
 	'ก': 1, 'ด': 1, 'ถ': 1, 'ท': 1, 'ภ': 1, 'ฤ': 1,
 	'ข': 2, 'บ': 2, 'ป': 2, 'ง': 2, 'ช': 2,
@@ -27,6 +26,7 @@ var luckyPointStore = []LuckyPoint{
 	{9, "เลขทะเบียนรถที่มีผลรวมเท่ากับ 9 ถือเป็นเลขมงคลที่เหมาะสำหรับทุกคน เลขนี้ช่วยเสริมสิ่งศักดิ์สิทธิ์คุ้มครอง ความปลอดภัยจากอุบัติเหตุ และความก้าวหน้าในชีวิต"},
 }
 
+// LuckyPointGroup represents a group of lucky points with a description for Overall of your plate(Sum)
 var luckyPointGroups = []LuckyPointGroup{
 	{
 		Group:  "best",
@@ -44,3 +44,80 @@ var luckyPointGroups = []LuckyPointGroup{
 		Desc:   "เลขทะเบียนที่อาจนำมาซึ่งความยากลำบาก ชีวิตจะพบเจออุปสรรคและความท้าทายอยู่บ่อยครั้ง ต้องใช้ความอดทนสูงมาก อาจพบปัญหาต่าง ๆ เข้ามาให้แก้ไขอยู่เสมอ ทั้งเรื่องการงาน การเงิน และความสัมพันธ์ ควรระมัดระวังในการใช้รถ และอาจต้องปรับเปลี่ยนทะเบียนหรือเสริมสิริมงคลด้วยวิธีอื่นเพิ่มเติม",
 	},
 }
+
+// advice by Day of birth
+/* var luckyNumberAdvice = []LuckyNumberAdvice{
+	{
+		Day:           1,
+		LuckyNumDesc:  "เลขมงคลสำหรับคนเกิดวันอาทิตย์",
+		LuckyNum:      []int{1, 5, 7, 9},
+		AvoidNumDesc:  "เลขอัปมงคลสำหรับคนเกิดวันอาทิตย์",
+		AvoidNum:      []int{6, 3},
+		AvoidCharDesc: "ตัวอักษรที่ควรหลีกเลี่ยงสำหรับคนเกิดวันอาทิตย์",
+		AvoidChar:     []string{"ศ", "ษ", "ส", "ห", "ฬ", "ฮ"},
+	},
+	{
+		Day:           2,
+		LuckyNumDesc:  "เลขมงคลสำหรับคนเกิดวันจันทร์",
+		LuckyNum:      []int{2, 4, 6, 8},
+		AvoidNumDesc:  "เลขอัปมงคลสำหรับคนเกิดวันจันทร์",
+		AvoidNum:      []int{1, 5},
+		AvoidCharDesc: "ตัวอักษรที่ควรหลีกเลี่ยงสำหรับคนเกิดวันจันทร์",
+		AvoidChar:     []string{"ก", "ข", "ค", "ฆ", "ง"},
+	},
+	{
+		Day:           3,
+		LuckyNumDesc:  "เลขมงคลสำหรับคนเกิดวันอังคาร",
+		LuckyNum:      []int{3, 5, 7, 9},
+		AvoidNumDesc:  "เลขอัปมงคลสำหรับคนเกิดวันอังคาร",
+		AvoidNum:      []int{2, 8},
+		AvoidCharDesc: "ตัวอักษรที่ควรหลีกเลี่ยงสำหรับคนเกิดวันอังคาร",
+		AvoidChar:     []string{"จ", "ฉ", "ช", "ซ", "ฌ"},
+	},
+	{
+		Day:           4,
+		LuckyNumDesc:  "เลขมงคลสำหรับคนเกิดวันพุธ",
+		LuckyNum:      []int{1, 2, 6, 8},
+		AvoidNumDesc:  "เลขอัปมงคลสำหรับคนเกิดวันพุธ",
+		AvoidNum:      []int{3, 7},
+		AvoidCharDesc: "ตัวอักษรที่ควรหลีกเลี่ยงสำหรับคนเกิดวันพุธ",
+		AvoidChar:     []string{"ฎ", "ฏ", "ฐ", "ฑ", "ฒ", "ณ"},
+	},
+	{
+		Day:           5,
+		LuckyNumDesc:  "เลขมงคลสำหรับคนเกิดวันพฤหัสบดี",
+		LuckyNum:      []int{1, 2, 4, 9},
+		AvoidNumDesc:  "เลขอัปมงคลสำหรับคนเกิดวันพฤหัสบดี",
+		AvoidNum:      []int{6, 8},
+		AvoidCharDesc: "ตัวอักษรที่ควรหลีกเลี่ยงสำหรับคนเกิดวันพฤหัสบดี",
+		AvoidChar:     []string{"ด", "ต", "ถ", "ท", "ธ", "น"},
+	},
+	{
+		Day:           6,
+		LuckyNumDesc:  "เลขมงคลสำหรับคนเกิดวันศุกร์",
+		LuckyNum:      []int{3, 5, 6, 9},
+		AvoidNumDesc:  "เลขอัปมงคลสำหรับคนเกิดวันศุกร์",
+		AvoidNum:      []int{1, 7},
+		AvoidCharDesc: "ตัวอักษรที่ควรหลีกเลี่ยงสำหรับคนเกิดวันศุกร์",
+		AvoidChar:     []string{"บ", "ป", "ผ", "ฝ", "พ", "ฟ"},
+	},
+	{
+		Day:           7,
+		LuckyNumDesc:  "เลขมงคลสำหรับคนเกิดวันเสาร์",
+		LuckyNum:      []int{7, 8, 9},
+		AvoidNumDesc:  "เลขอัปมงคลสำหรับคนเกิดวันเสาร์",
+		AvoidNum:      []int{2, 4},
+		AvoidCharDesc: "ตัวอักษรที่ควรหลีกเลี่ยงสำหรับคนเกิดวันเสาร์",
+		AvoidChar:     []string{"ย", "ร", "ล", "ว"},
+	},
+	{
+		Day:           8,
+		LuckyNumDesc:  "เลขมงคลสำหรับคนเกิดวันพุธกลางคืน",
+		LuckyNum:      []int{2, 4, 6, 8},
+		AvoidNumDesc:  "เลขอัปมงคลสำหรับคนเกิดวันพุธกลางคืน",
+		AvoidNum:      []int{1, 5},
+		AvoidCharDesc: "ตัวอักษรที่ควรหลีกเลี่ยงสำหรับคนเกิดวันพุธกลางคืน",
+		AvoidChar:     []string{"ศ", "ษ", "ส", "ห", "ฬ", "ฮ"},
+	},
+}
+*/

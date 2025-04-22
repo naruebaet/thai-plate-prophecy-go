@@ -33,3 +33,13 @@ type TotalData struct {
 	Sum        int              `json:"sum"`
 	LuckyGroup *LuckyPointGroup `json:"luckyGroup"`
 }
+
+type LuckyNumberAdvice struct {
+	Day           int      `json:"day"`
+	LuckyNumDesc  string   `json:"lucky_num_desc"`
+	LuckyNum      []int    `json:"lucky_num"`
+	AvoidNumDesc  string   `json:"avoid_num_desc"`
+	AvoidNum      []int    `json:"avoid_num"`
+	AvoidCharDesc string   `json:"avoid_char_desc"`
+	AvoidChar     []string `json:"avoid_char"`
+}
