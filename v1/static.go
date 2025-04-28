@@ -59,7 +59,7 @@ var luckyNumberAdvice = []LuckyNumberAdvice{
 	{
 		Day:           1,
 		LuckyNumDesc:  "เลขมงคลสำหรับคนเกิดวันจันทร์",
-		LuckyNum:      []int{2, 4, 6, 8},
+		LuckyNum:      []int{2, 4, 6, 8, 0},
 		AvoidNumDesc:  "เลขอัปมงคลสำหรับคนเกิดวันจันทร์",
 		AvoidNum:      []int{1, 5},
 		AvoidCharDesc: "ตัวอักษรที่ควรหลีกเลี่ยงสำหรับคนเกิดวันจันทร์",
@@ -88,7 +88,7 @@ var luckyNumberAdvice = []LuckyNumberAdvice{
 		LuckyNumDesc:  "เลขมงคลสำหรับคนเกิดวันพฤหัสบดี",
 		LuckyNum:      []int{2, 4, 6, 8},
 		AvoidNumDesc:  "เลขอัปมงคลสำหรับคนเกิดวันพฤหัสบดี",
-		AvoidNum:      []int{8},
+		AvoidNum:      []int{7},
 		AvoidCharDesc: "ตัวอักษรที่ควรหลีกเลี่ยงสำหรับคนเกิดวันพฤหัสบดี",
 		AvoidChar:     []string{"ด", "ต", "ถ", "ท", "ธ", "น"},
 	},
